@@ -1,7 +1,7 @@
 // src/js/components/Form.jsx
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { addArticle } from "../actions/index";
+import { addArticle } from "../redux/actions";
 
 function mapDispatchToProps(dispatch) {
   return {
