@@ -1,11 +1,12 @@
 // src/js/components/Form.jsx
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { addArticle } from "../redux/actions";
+import { gantiJudul } from "../redux/actions";
 
 function mapDispatchToProps(dispatch) {
   return {
-    tambahArtikel: (article) => dispatch(addArticle(article)),
+    tambahArtikel: (article) => dispatch(gantiJudul(article)),
+    gantiKonten: (data) => dispatch({ type: "GANTI_KONTEN", konten: data }),
   };
 }
 
@@ -14,6 +15,7 @@ class ConnectedForm extends Component {
     super(props);
     this.state = {
       title: "",
+      konten: "",
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -26,19 +28,28 @@ class ConnectedForm extends Component {
   handleSubmit(event) {
     event.preventDefault();
     const { title } = this.state;
-    this.props.tambahArtikel({ title });
+    this.props.tambahArtikel(title);
     this.setState({ title: "" });
+    const { konten } = this.state;
+    this.props.gantiKonten(konten);
+    this.setState({ konten: "" });
   }
   render() {
-    const { title } = this.state;
+    const { title, konten } = this.state;
     return (
-      <form onSubmit={this.handleSubmit}>
-        <div>
-          <label htmlFor="title">Title</label>
-          <input type="text" id="title" value={title} onChange={this.handleChange} />
-        </div>
-        <button type="submit">SAVE</button>
-      </form>
+      <div>
+        <p>//Form.js</p>
+        <br />
+        <form onSubmit={this.handleSubmit}>
+          <div>
+            <label>Title</label>
+            <input type="text" id="title" value={title} onChange={this.handleChange} />
+            <label>Isi</label>
+            <input type="text" id="konten" value={konten} onChange={this.handleChange} />
+          </div>
+          <button type="submit">SAVE</button>
+        </form>
+      </div>
     );
   }
 }

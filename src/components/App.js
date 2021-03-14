@@ -7,6 +7,8 @@ const App = () => (
   <>
     <div>
       <Test />
+      <List />
+      <Form />
     </div>
   </>
 );

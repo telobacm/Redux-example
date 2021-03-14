@@ -1,12 +1,11 @@
 import { createStore } from "redux";
-// import { persistStore, persistReducer } from "redux-persist";
-// import storage from "redux-persist/lib/storage";
-import { ADD_ARTICLE } from "./actions";
+import { persistStore, persistReducer } from "redux-persist";
+import storage from "redux-persist/lib/storage"; // defaults to localStorage for web
 
 const initialState = {
   articles: [],
   title: "Hellow Bro!",
-  konten: "asd",
+  konten: "Javascript 4 lyfe ! ✊",
 };
 
 function rootReducer(state = initialState, action) {
@@ -16,18 +15,18 @@ function rootReducer(state = initialState, action) {
     });
   }
   if (action.type === "GANTI_KONTEN") {
-    return { ...state, konten: action.konten }
+    return { ...state, konten: action.konten };
   }
-  // default state
   return state;
 }
-// const persistedReducer = persistReducer(
-//   {
-//     key: "root",
-//     storage,
-//   },
-//   rootReducer
-// );
-const isDev = process.env.NODE_ENV == 'development'
-export const store = createStore(rootReducer, isDev ? window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__() : '');
-// export const persistor = persistStore(store);
+
+const persistConfig = {
+  key: "root",
+  storage,
+};
+
+const persistedReducer = persistReducer(persistConfig, rootReducer);
+
+const isDev = process.env.NODE_ENV == "development";
+export const store = createStore(persistedReducer, isDev ? window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__() : "");
+export const persistor = persistStore(store);
